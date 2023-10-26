@@ -1,0 +1,33 @@
+{
+  "name": "sistema-pdv-modulo05-cubos-academy",
+  "version": "1.0.0",
+  "description": "![](https://i.imgur.com/xG74tOh.png)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henrique-sch/sistema-pdv-modulo05-cubos-academy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henrique-sch/sistema-pdv-modulo05-cubos-academy/issues"
+  },
+  "homepage": "https://github.com/henrique-sch/sistema-pdv-modulo05-cubos-academy#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.0.1",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
