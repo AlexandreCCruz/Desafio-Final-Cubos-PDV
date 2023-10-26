@@ -23,7 +23,7 @@ rotas.post("/login", login);
 
 rotas.get("/categoria", listarCategorias);
 
-rotas.use(verificaUsuarioLogado);
+// rotas.use(verificaUsuarioLogado);
 
 rotas.get("/usuario", detalharPerfilUsuario);
 rotas.put(
