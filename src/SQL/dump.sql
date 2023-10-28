@@ -22,7 +22,7 @@ VALUES
 
 CREATE TABLE produtos(
   id SERIAL PRIMARY KEY UNIQUE,
-  descricao TEXT NOT NULL UNIQUE,
+  descricao TEXT NOT NULL,
   quantidade_estoque INTEGER NOT NULL,
   valor INTEGER NOT NULL,
   categoria_id INTEGER NOT NULL REFERENCES categorias (id)

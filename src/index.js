@@ -10,6 +10,5 @@ app.use(express.json());
 app.use(cors())
 app.use(rotas);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Servidor aberto na porta ${process.env.PORT}`)
-});
+app.listen(process.env.PORT)
+
