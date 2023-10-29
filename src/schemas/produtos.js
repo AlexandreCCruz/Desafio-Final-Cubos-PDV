@@ -8,17 +8,18 @@ const schemaCorpoProdutos = joi.object({
         'string.base': 'O campo (descricao) não pode ser um número'
     }),
 
-    quantidade_estoque: joi.number().required().messages({
+    quantidade_estoque: joi.number().min(0).required().messages({
         'any.required': 'O campo (quantidade_estoque) é obrigatório',
         'string.empty': 'O campo (quantidade_estoque) não pode ser vazio',
-        'number.base': 'O campo (quantidade_estoque) tem que ser um número'
-
+        'number.base': 'O campo (quantidade_estoque) tem que ser um número',
+        'number.min': 'O campo (valor) deve ser positivo'
     }),
 
-    valor: joi.number().required().messages({
+    valor: joi.number().min(0).required().messages({
         'any.required': 'O campo (valor) é obrigatório',
         'string.empty': 'O campo (valor) não pode ser vazio',
-        'number.base': 'O campo (valor) tem que ser um número'
+        'number.base': 'O campo (valor) tem que ser um número',
+        'number.min': 'O campo (valor) deve ser positivo'
     }),
 
     categoria_id: joi.number().required().messages({

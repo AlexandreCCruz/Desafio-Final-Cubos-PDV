@@ -6,14 +6,23 @@ const {
   cadastrarUsuario,
   detalharPerfilUsuario,
   atualizarPerfilUsuario,
-} = require("./controladores/usuario");
+} = require("./controladores/usuarios");
 
 const { listarCategorias } = require("./controladores/categorias");
 
 const login = require("./controladores/login");
 const verificaUsuarioLogado = require("./intermediarios/validarLogin");
-const { schemaCorpoUsuario } = require("./schemas/usuario");
-const { cadastrarProdutos } = require("./controladores/produtos");
+const { schemaCorpoUsuario } = require("./schemas/usuarios");
+
+const { 
+  cadastrarProdutos,
+  listarProdutos
+} = require("./controladores/produtos");
+
+const {
+  validarQueryCategoriaProduto
+} = require('./intermediarios/produtos')
+
 const { schemaCorpoProdutos } = require("./schemas/produtos");
 
 rotas.post("/usuario", validarCorpoRequisicao(schemaCorpoUsuario), cadastrarUsuario);
@@ -30,5 +39,6 @@ rotas.put("/usuario", validarCorpoRequisicao(schemaCorpoUsuario), atualizarPerfi
 
 rotas.post("/produto", validarCorpoRequisicao(schemaCorpoProdutos), cadastrarProdutos);
 
+rotas.get("/produto", validarQueryCategoriaProduto, listarProdutos), 
 
 module.exports = rotas;
