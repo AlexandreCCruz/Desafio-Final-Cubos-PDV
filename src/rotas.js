@@ -16,7 +16,8 @@ const { schemaCorpoUsuario } = require("./schemas/usuarios");
 
 const { 
   cadastrarProdutos,
-  listarProdutos
+  listarProdutos,
+  detalharProduto
 } = require("./controladores/produtos");
 
 const {
@@ -41,4 +42,5 @@ rotas.post("/produto", validarCorpoRequisicao(schemaCorpoProdutos), cadastrarPro
 
 rotas.get("/produto", validarQueryCategoriaProduto, listarProdutos), 
 
+rotas.get("/produto/:id", detalharProduto)
 module.exports = rotas;
