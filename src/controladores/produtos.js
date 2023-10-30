@@ -47,7 +47,7 @@ const listarProdutos = async (req,res) => {
         } else {
             listagemProdutos = await knex('produtos');
         }
-        return res.status(200).json(listagemProdutos.rows)
+        return res.status(200).json(listagemProdutos)
     } catch (error) {
         return res.status(400).json(error.message); 
     }
@@ -57,9 +57,7 @@ const detalharProduto = async (req,res) => {
     const {id} = req.params;
     const selecionarProduto = await knex('produtos').where('id',id).first();
     if (!selecionarProduto) {
-        if (!selecionarProduto) {
-            return res.status(404).json("Não existe um produto para o id informado");
-        }
+        return res.status(404).json("Não existe um produto para o id informado");
     }
     return res.status(200).json(selecionarProduto)
 }

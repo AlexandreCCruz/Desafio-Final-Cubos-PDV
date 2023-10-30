@@ -40,7 +40,8 @@ rotas.put("/usuario", validarCorpoRequisicao(schemaCorpoUsuario), atualizarPerfi
 
 rotas.post("/produto", validarCorpoRequisicao(schemaCorpoProdutos), cadastrarProdutos);
 
+rotas.get("/produto/:id", detalharProduto)
+
 rotas.get("/produto", validarQueryCategoriaProduto, listarProdutos), 
 
-rotas.get("/produto/:id", detalharProduto)
 module.exports = rotas;
