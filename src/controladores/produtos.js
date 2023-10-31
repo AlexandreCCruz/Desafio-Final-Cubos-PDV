@@ -39,31 +39,14 @@ const cadastrarProdutos = async (req, res) => {
 };
 
 const listarProdutos = async (req, res) => {
-<<<<<<< HEAD
   let listagemProdutos;
   try {
     if (req.produtoFiltro) {
-      listagemProdutos = await knex("produtos").where(
-        "id",
-        "in",
-        req.produtoFiltro
-      );
+      listagemProdutos = await knex('produtos').where('id', 'in', req.produtoFiltro)
     } else {
-      listagemProdutos = await knex("produtos");
-=======
-    let listagemProdutos;
-    try {
-        if (req.produtoFiltro) {
-            listagemProdutos = await knex('produtos').where('id', 'in', req.produtoFiltro)
-        } else {
-            listagemProdutos = await knex('produtos');
-        }
-        return res.status(200).json(listagemProdutos)
-    } catch (error) {
-        return res.status(400).json(error.message);
->>>>>>> 5a0783e273a9a5e5628cbcb1b5937aa0d28b7cfa
+      listagemProdutos = await knex('produtos');
     }
-    return res.status(200).json(listagemProdutos);
+    return res.status(200).json(listagemProdutos)
   } catch (error) {
     return res.status(400).json(error.message);
   }
@@ -75,12 +58,6 @@ const excluirProduto = async (req, res) => {
   try {
     const selecionarProduto = await knex("produtos").where({ id }).first;
 
-<<<<<<< HEAD
-=======
-const detalharProduto = async (req, res) => {
-    const { id } = req.params;
-    const selecionarProduto = await knex('produtos').where('id', id).first();
->>>>>>> 5a0783e273a9a5e5628cbcb1b5937aa0d28b7cfa
     if (!selecionarProduto) {
       return res.status.json("Não existe produto com o ID informado!");
     }
@@ -99,11 +76,16 @@ const detalharProduto = async (req, res) => {
 
 const detalharProduto = async (req, res) => {
   const { id } = req.params;
-  const selecionarProduto = await knex("produtos").where({ id }).first();
-  if (!selecionarProduto) {
-    return res.status(404).json("Não existe um produto para o id informado");
+
+  try {
+    const selecionarProduto = await knex("produtos").where({ id }).first();
+    if (!selecionarProduto) {
+      return res.status(404).json("Não existe um produto para o id informado");
+    }
+    return res.status(200).json(selecionarProduto);
+  } catch (error) {
+    return res.status(400).json(error.message);
   }
-  return res.status(200).json(selecionarProduto);
 };
 
 const atualizarProduto = async (req, res) => {

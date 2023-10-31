@@ -61,10 +61,10 @@ const alterarCliente = async (req, res) => {
                 cidade,
                 estado
             })
-        return res.status(200).json("Cliente Atualizado com Sucesso!")
+        return res.status(200).json("Cliente Atualizado com Sucesso!");
     } catch (erro) {
         console.log(erro.message);
-        res.status(500).json({ mensagem: "Erro na atualização" })
+        res.status(500).json({ mensagem: "Erro na atualização" });
     }
 }
 
@@ -76,12 +76,17 @@ const listarClientes = async (req, res) => {
 const detalharCliente = async (req, res) => {
     const { id } = req.params;
 
-    const clienteEncontrado = await knex('clientes').where({ id }).first();
+    try {
+        const clienteEncontrado = await knex('clientes').where({ id }).first();
 
-    if (!clienteEncontrado) {
-        return res.status(404).json("Não existe um cliente para o id informado");
+        if (!clienteEncontrado) {
+            return res.status(404).json("Não existe um cliente para o id informado");
+        }
+        return res.status(200).json(clienteEncontrado);
+    } catch (error) {
+        return res.status(400).json(error.message);
     }
-    return res.status(200).json(clienteEncontrado)
+
 }
 
 module.exports = {
