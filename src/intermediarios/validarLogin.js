@@ -14,7 +14,7 @@ async function verificaUsuarioLogado(req, res, next) {
         const verificarUsuarioExiste = await knex('usuarios').where('id', id);
         delete verificarUsuarioExiste[0].senha;
         req.usuario = verificarUsuarioExiste[0];
-        next();
+        return next();
     } catch (error) {
         console.log(error)
         return res.status(500).json({ mensagem: 'Erro interno do servidor' });

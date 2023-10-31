@@ -10,11 +10,14 @@ const {
 
 const { listarCategorias } = require("./controladores/categorias");
 
+
+const { cadastrarClientes, alterarClientes } = require("./controladores/clientes")
+
 const login = require("./controladores/login");
 const verificaUsuarioLogado = require("./intermediarios/validarLogin");
 const { schemaCorpoUsuario } = require("./schemas/usuarios");
 
-const { 
+const {
   cadastrarProdutos,
   listarProdutos,
   detalharProduto
@@ -23,6 +26,8 @@ const {
 const {
   validarQueryCategoriaProduto
 } = require('./intermediarios/produtos')
+
+const { validaCPF, validaEmail, validaNome, nomeEmailCpfExiste } = require('./intermediarios/validarNomeEmailCpf')
 
 const { schemaCorpoProdutos } = require("./schemas/produtos");
 
@@ -42,6 +47,10 @@ rotas.post("/produto", validarCorpoRequisicao(schemaCorpoProdutos), cadastrarPro
 
 rotas.get("/produto/:id", detalharProduto)
 
-rotas.get("/produto", validarQueryCategoriaProduto, listarProdutos), 
+rotas.get("/produto", validarQueryCategoriaProduto, listarProdutos);
+
+rotas.put("/cliente/:id", validaNome, validaEmail, validaCPF, nomeEmailCpfExiste, alterarClientes)
+
+rotas.post("/cliente", validaNome, validaEmail, validaCPF, cadastrarClientes)
 
 module.exports = rotas;
