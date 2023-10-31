@@ -1,7 +1,6 @@
 const joi = require('joi')
 
 const schemaCorpoProdutos = joi.object({
-
     descricao: joi.string().required().messages({
         'any.required': 'O campo (descricao) é obrigatório',
         'string.empty': 'O campo (descricao) não pode ser vazio',
