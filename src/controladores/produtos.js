@@ -1,4 +1,3 @@
-const { array } = require("joi");
 const knex = require("../conexao");
 
 const cadastrarProdutos = async (req, res) => {
@@ -40,6 +39,7 @@ const cadastrarProdutos = async (req, res) => {
 };
 
 const listarProdutos = async (req, res) => {
+<<<<<<< HEAD
   let listagemProdutos;
   try {
     if (req.produtoFiltro) {
@@ -50,6 +50,18 @@ const listarProdutos = async (req, res) => {
       );
     } else {
       listagemProdutos = await knex("produtos");
+=======
+    let listagemProdutos;
+    try {
+        if (req.produtoFiltro) {
+            listagemProdutos = await knex('produtos').where('id', 'in', req.produtoFiltro)
+        } else {
+            listagemProdutos = await knex('produtos');
+        }
+        return res.status(200).json(listagemProdutos)
+    } catch (error) {
+        return res.status(400).json(error.message);
+>>>>>>> 5a0783e273a9a5e5628cbcb1b5937aa0d28b7cfa
     }
     return res.status(200).json(listagemProdutos);
   } catch (error) {
@@ -63,6 +75,12 @@ const excluirProduto = async (req, res) => {
   try {
     const selecionarProduto = await knex("produtos").where({ id }).first;
 
+<<<<<<< HEAD
+=======
+const detalharProduto = async (req, res) => {
+    const { id } = req.params;
+    const selecionarProduto = await knex('produtos').where('id', id).first();
+>>>>>>> 5a0783e273a9a5e5628cbcb1b5937aa0d28b7cfa
     if (!selecionarProduto) {
       return res.status.json("Não existe produto com o ID informado!");
     }
