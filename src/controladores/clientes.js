@@ -40,7 +40,7 @@ const cadastrarCliente = async (req, res) => {
     }
 }
 
-const alterarCliente = async (req, res) => {
+const editarDadosCliente = async (req, res) => {
     const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
     const { id } = req.params;
     const { idEncontrado } = req
@@ -89,7 +89,7 @@ const detalharCliente = async (req, res) => {
 
 module.exports = {
     cadastrarCliente,
-    alterarCliente,
+    editarDadosCliente,
     listarClientes,
     detalharCliente
 }

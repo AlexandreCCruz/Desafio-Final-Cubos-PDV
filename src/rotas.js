@@ -15,12 +15,12 @@ const {
   listarProdutos,
   detalharProduto,
   excluirProduto,
-  atualizarProduto,
+  editarDadosProduto,
 } = require("./controladores/produtos");
 
 const {
   cadastrarCliente,
-  alterarCliente,
+  editarDadosCliente,
   listarClientes,
   detalharCliente
 } = require("./controladores/clientes")
@@ -55,13 +55,13 @@ rotas.get("/produto/:id", detalharProduto);
 
 rotas.get("/produto", validarQueryCategoriaProduto, listarProdutos);
 
-rotas.put("/produto/:id", atualizarProduto);
+rotas.put("/produto/:id", editarDadosProduto);
 
 rotas.delete("/produto/:id", excluirProduto);
 
 rotas.post("/cliente", validarCorpoRequisicao(schemaCorpoCliente), cadastrarCliente)
 
-rotas.put("/cliente/:id", validarCorpoRequisicao(schemaCorpoCliente), validarAlterarCliente, alterarCliente)
+rotas.put("/cliente/:id", validarCorpoRequisicao(schemaCorpoCliente), validarAlterarCliente, editarDadosCliente)
 
 rotas.get("/cliente", listarClientes)
 

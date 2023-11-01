@@ -88,7 +88,7 @@ const detalharProduto = async (req, res) => {
   }
 };
 
-const atualizarProduto = async (req, res) => {
+const editarDadosProduto = async (req, res) => {
   const { id } = req.params;
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
@@ -129,5 +129,5 @@ module.exports = {
   listarProdutos,
   detalharProduto,
   excluirProduto,
-  atualizarProduto,
+  editarDadosProduto,
 };
