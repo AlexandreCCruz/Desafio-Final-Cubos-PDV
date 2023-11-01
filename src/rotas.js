@@ -25,6 +25,10 @@ const {
   detalharCliente
 } = require("./controladores/clientes")
 
+const {
+  validarAlterarCliente
+} = require('./intermediarios/clientes')
+
 const login = require("./controladores/login");
 const verificaUsuarioLogado = require("./intermediarios/validarLogin");
 const { schemaCorpoUsuario } = require("./schemas/usuarios");
@@ -57,7 +61,7 @@ rotas.delete("/produto/:id", excluirProduto);
 
 rotas.post("/cliente", validarCorpoRequisicao(schemaCorpoCliente), cadastrarCliente)
 
-rotas.put("/cliente/:id", validarCorpoRequisicao(schemaCorpoCliente), alterarCliente)
+rotas.put("/cliente/:id", validarCorpoRequisicao(schemaCorpoCliente), validarAlterarCliente, alterarCliente)
 
 rotas.get("/cliente", listarClientes)
 

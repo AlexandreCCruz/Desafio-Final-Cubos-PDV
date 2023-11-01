@@ -43,23 +43,21 @@ const cadastrarCliente = async (req, res) => {
 const alterarCliente = async (req, res) => {
     const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
     const { id } = req.params;
+    const { idEncontrado } = req
 
     try {
-        const idEncontrado = await knex("clientes").where({ id }).first();
-        if (!idEncontrado) {
-            return res.status(404).json("Não existe um cliente para o id informado");
-        }
+
         await knex("clientes").where({ id })
             .update({
-                nome,
-                email,
-                cpf,
-                cep,
-                rua,
-                numero,
-                bairro,
-                cidade,
-                estado
+                nome: nome || idEncontrado.nome,
+                email: email || idEncontrado.email,
+                cpf: cpf || idEncontrado.cpf,
+                cep: cep || idEncontrado.cep,
+                rua: rua || idEncontrado.rua,
+                numero: numero || idEncontrado.numero,
+                bairro: bairro || idEncontrado.bairro,
+                cidade: cidade || idEncontrado.cidade,
+                estado: estado || idEncontrado.estado
             })
         return res.status(200).json("Cliente Atualizado com Sucesso!");
     } catch (erro) {

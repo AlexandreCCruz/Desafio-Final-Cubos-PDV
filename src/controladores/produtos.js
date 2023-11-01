@@ -42,7 +42,7 @@ const listarProdutos = async (req, res) => {
   let listagemProdutos;
   try {
     if (req.produtoFiltro) {
-      listagemProdutos = await knex('produtos').where('id', 'in', req.produtoFiltro)
+      listagemProdutos = await knex('produtos').where('categoria_id', 'in', req.produtoFiltro)
     } else {
       listagemProdutos = await knex('produtos');
     }
@@ -107,7 +107,8 @@ const atualizarProduto = async (req, res) => {
 
     const produtoAtualizado = await knex("produtos")
       .update(produto)
-      .where({ id });
+      .where({ id })
+      .returning('*');
 
     if (!produtoAtualizado) {
       return res
@@ -117,7 +118,7 @@ const atualizarProduto = async (req, res) => {
 
     return res
       .status(200)
-      .json("Os dados do produto foram atualizados com sucesso!");
+      .json(produtoAtualizado);
   } catch (error) {
     return res.status(400).json(error.message);
   }
