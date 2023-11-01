@@ -4,6 +4,7 @@ function validarCorpoRequisicao(schema) {
         try {
             await schema.validateAsync(req.body)
         } catch (error) {
+            console.log(error.message)
             return res.status(500).json(error.message)
         }
         next();

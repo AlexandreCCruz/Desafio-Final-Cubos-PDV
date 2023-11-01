@@ -12,11 +12,10 @@ const schemaCorpoCliente = joi.object({
         'string.base': 'O campo (email) não pode ser um número',
         'string.email': 'O campo (email) deve ser um email de padrão válido'
     }),
-    cpf: joi.number().required().messages({
+    cpf: joi.string().required().messages({
         'any.required': 'O campo (cpf) é obrigatório',
-        'number.empty': 'O campo (cpf) não pode ser vazio',
-        'number.min': 'O campo (cpf) deve ter no mínimo 11 caracteres',
-        'number.base': 'O campo (cpf) não pode ser texto'
+        'string.empty': 'O campo (cpf) não pode ser vazio',
+        'string.base': 'O campo (cpf) não pode ser texto'
     }),
     cep: joi.number().min(9999999).messages({
         'number.min': 'O campo (cep) deve ter no mínimo 8 caracteres'

@@ -3,6 +3,10 @@ const knex = require('../conexao')
 const cadastrarCliente = async (req, res) => {
     const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
 
+    if (cpf.length != 11) {
+        return res.status(400).json("Deve ser informado um cpf válido");
+    }
+
     try {
         const emailEncontrado = await knex("clientes").where({ email }).first();
 
@@ -15,6 +19,7 @@ const cadastrarCliente = async (req, res) => {
         if (cpfEncontrado) {
             return res.status(400).json("Já existe um cliente com cpf informado");
         }
+
 
         const cliente = await knex("clientes")
             .insert({
@@ -47,7 +52,7 @@ const editarDadosCliente = async (req, res) => {
 
     try {
 
-        await knex("clientes").where({ id })
+        const atualizarCliente = await knex("clientes").where({ id })
             .update({
                 nome: nome || idEncontrado.nome,
                 email: email || idEncontrado.email,
@@ -58,8 +63,8 @@ const editarDadosCliente = async (req, res) => {
                 bairro: bairro || idEncontrado.bairro,
                 cidade: cidade || idEncontrado.cidade,
                 estado: estado || idEncontrado.estado
-            })
-        return res.status(200).json("Cliente Atualizado com Sucesso!");
+            }).returning('*')
+        return res.status(200).json(atualizarCliente);
     } catch (erro) {
         console.log(erro.message);
         res.status(500).json({ mensagem: "Erro na atualização" });
