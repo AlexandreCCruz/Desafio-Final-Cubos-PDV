@@ -29,6 +29,10 @@ const {
   validarEditarDadosCliente
 } = require('./intermediarios/clientes')
 
+const {
+  validarCamposPedido
+} = require('./intermediarios/pedidos')
+
 const login = require("./controladores/login");
 const verificaUsuarioLogado = require("./intermediarios/validarLogin");
 const { schemaCorpoUsuario } = require("./schemas/usuarios");
