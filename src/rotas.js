@@ -26,6 +26,10 @@ const {
 } = require("./controladores/clientes")
 
 const {
+  cadastrarPedido
+} = require('./controladores/pedidos')
+
+const {
   validarEditarDadosCliente
 } = require('./intermediarios/clientes')
 
@@ -70,5 +74,7 @@ rotas.put("/cliente/:id", validarCorpoRequisicao(schemaCorpoCliente), validarEdi
 rotas.get("/cliente", listarClientes)
 
 rotas.get("/cliente/:id", detalharCliente)
+
+rotas.post("/pedido", validarCamposPedido, cadastrarPedido)
 
 module.exports = rotas;
