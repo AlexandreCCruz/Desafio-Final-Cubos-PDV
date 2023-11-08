@@ -22,20 +22,10 @@ const {
   cadastrarCliente,
   editarDadosCliente,
   listarClientes,
-  detalharCliente
-} = require("./controladores/clientes")
+  detalharCliente,
+} = require("./controladores/clientes");
 
-const {
-  cadastrarPedido, listarpedidos
-} = require('./controladores/pedidos')
-
-const {
-  validarEditarDadosCliente
-} = require('./intermediarios/clientes')
-
-const {
-  validarCamposPedido
-} = require('./intermediarios/pedidos')
+const { validarEditarDadosCliente } = require("./intermediarios/clientes");
 
 const login = require("./controladores/login");
 const verificaUsuarioLogado = require("./intermediarios/validarLogin");
@@ -44,8 +34,13 @@ const { schemaCorpoProdutos } = require("./schemas/produtos");
 const { schemaCorpoCliente } = require("./schemas/clientes");
 
 const { validarQueryCategoriaProduto } = require("./intermediarios/produtos");
+const multer = require("./intermediarios/multer");
 
-rotas.post("/usuario", validarCorpoRequisicao(schemaCorpoUsuario), cadastrarUsuario);
+rotas.post(
+  "/usuario",
+  validarCorpoRequisicao(schemaCorpoUsuario),
+  cadastrarUsuario
+);
 
 rotas.post("/login", login);
 
@@ -55,27 +50,42 @@ rotas.get("/categoria", listarCategorias);
 
 rotas.get("/usuario", detalharPerfilUsuario);
 
-rotas.put("/usuario", validarCorpoRequisicao(schemaCorpoUsuario), atualizarPerfilUsuario);
+rotas.put(
+  "/usuario",
+  validarCorpoRequisicao(schemaCorpoUsuario),
+  atualizarPerfilUsuario
+);
 
-rotas.post("/produto", validarCorpoRequisicao(schemaCorpoProdutos), cadastrarProdutos);
-
+rotas.post(
+  "/produto",
+  multer.single("produto_imagem"),
+  validarCorpoRequisicao(schemaCorpoProdutos),
+  cadastrarProdutos
+);
+//validarCorpoRequisicao(schemaCorpoProdutos)
 rotas.get("/produto/:id", detalharProduto);
 
 rotas.get("/produto", validarQueryCategoriaProduto, listarProdutos);
 
-rotas.put("/produto/:id", editarDadosProduto);
+rotas.put("/produto/:id", multer.single("produto_imagem"), editarDadosProduto);
 
 rotas.delete("/produto/:id", excluirProduto);
 
-rotas.post("/cliente", validarCorpoRequisicao(schemaCorpoCliente), cadastrarCliente)
+rotas.post(
+  "/cliente",
+  validarCorpoRequisicao(schemaCorpoCliente),
+  cadastrarCliente
+);
 
-rotas.put("/cliente/:id", validarCorpoRequisicao(schemaCorpoCliente), validarEditarDadosCliente, editarDadosCliente)
+rotas.put(
+  "/cliente/:id",
+  validarCorpoRequisicao(schemaCorpoCliente),
+  validarEditarDadosCliente,
+  editarDadosCliente
+);
 
-rotas.get("/cliente", listarClientes)
+rotas.get("/cliente", listarClientes);
 
-rotas.get("/cliente/:id", detalharCliente)
+rotas.get("/cliente/:id", detalharCliente);
 
-rotas.post("/pedido", validarCamposPedido, cadastrarPedido)
-
-rotas.get("/pedido", listarpedidos)
 module.exports = rotas;

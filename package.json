@@ -4,7 +4,6 @@
   "description": "![](https://i.imgur.com/xG74tOh.png)",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js"
   },
   "repository": {
@@ -19,6 +18,7 @@
   },
   "homepage": "https://github.com/henrique-sch/sistema-pdv-modulo05-cubos-academy#readme",
   "dependencies": {
+    "aws-sdk": "^2.1490.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -27,7 +27,7 @@
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.0.1",
-    "nodemailer": "^6.9.7",
+    "multer": "^1.4.5-lts.1",
     "pg": "^8.11.3"
   },
   "devDependencies": {
