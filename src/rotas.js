@@ -26,7 +26,7 @@ const {
 } = require("./controladores/clientes")
 
 const {
-  cadastrarPedido
+  cadastrarPedido, listarpedidos
 } = require('./controladores/pedidos')
 
 const {
@@ -77,4 +77,5 @@ rotas.get("/cliente/:id", detalharCliente)
 
 rotas.post("/pedido", validarCamposPedido, cadastrarPedido)
 
+rotas.get("/pedido", listarpedidos)
 module.exports = rotas;
