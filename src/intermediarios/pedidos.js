@@ -35,6 +35,38 @@ const validarCamposPedido = async (req, res, next) => {
     }
 }
 
+
+const verificar_cliente = async (id) => {
+    const Verific = await knex("clientes").where({ id }).first()
+    return Verific
+}
+
+
+const bucaPedido = async (cliente_id) => {
+    const busca = await knex("pedidos").where("cliente_id", cliente_id).count()
+    return busca[0].count
+}
+
+
+const apenasPedidos = async (cliente_id) => {
+    if (!cliente_id) {
+        const listando = await knex('pedidos')
+
+        return listando
+    }
+}
+
+const PedidoId = async (pedido) => {
+    const listando = await knex("pedido_produto").where({ pedido_id: pedido.id })
+
+    return listando
+}
+
+
 module.exports = {
-    validarCamposPedido
+    validarCamposPedido,
+    verificar_cliente,
+    bucaPedido,
+    apenasPedidos,
+    PedidoId
 }

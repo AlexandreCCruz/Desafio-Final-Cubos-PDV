@@ -1,4 +1,5 @@
 const knex = require('../conexao');
+const { verificar_cliente, bucaPedido, PedidoId, apenasPedidos } = require('../intermediarios/pedidos');
 const transporter = require('../utils/mail')
 require('dotenv').config();
 
@@ -64,27 +65,29 @@ const cadastrarPedido = async (req, res) => {
 }
 const listarPedidos = async (req, res) => {
     const { cliente_id } = req.body
-    let resultado = []
+
     try {
+        const resultado = []
 
         if (cliente_id) {
 
-            const VereficarExistencia = await knex("clientes").where({ id: cliente_id }).first()
+            const VereficarExistencia = await verificar_cliente(cliente_id)
 
             if (!VereficarExistencia) {
                 return res.status(404).json({ mensagem: "o Cliente não foi encontrado." })
             }
 
-            const buscarPedido = await knex("pedidos").where("cliente_id", cliente_id).count()
+            const buscarPedido = await bucaPedido(cliente_id)
 
-            if (buscarPedido === 0) {
+
+            if (buscarPedido == 0) {
                 return res.status(404).json({ mensagem: "Não tem pedidos cadastrados para este cliente." })
             }
-            return buscarPedido[0].count
 
         }
 
-        const pedidos = await knex("pedidos");
+        const pedidos = await apenasPedidos(cliente_id)
+
 
         for (const pedido of pedidos) {
             const {
@@ -94,7 +97,7 @@ const listarPedidos = async (req, res) => {
                 cliente_id,
             } = pedido;
 
-            const pedidoId = await knex("pedido_produtos").where({ pedido_id: pedido.id })
+            const pedidoId = await PedidoId(pedido)
 
             const pedidoFormatado = {
                 pedido: {
@@ -116,8 +119,8 @@ const listarPedidos = async (req, res) => {
         }
 
         return res.json(resultado);
-
     } catch (error) {
+        console.log(error);
         return res.status(500).json({ mensagem: `Erro interno do servidor` });
     }
 }
