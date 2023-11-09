@@ -4,22 +4,46 @@ require('dotenv').config();
 
 const cadastrarPedido = async (req, res) => {
     const { nome, email } = req.usuario;
-    const { pedido_produtos } = req.body;
+    const { cliente_id, observacao, pedido_produtos } = req.body;
 
     try {
+
         const produtosSelecionados = await Promise.all(pedido_produtos.map(async (pedido) => {
-            const produto = await knex('produtos').where('id', pedido.produto_id).select('id', 'quantidade_estoque')
+            const produto = await knex('produtos').where('id', pedido.produto_id).select('id', 'quantidade_estoque', 'valor')
             return produto
-        }))
+        }));
+
+        let valorTotalPedido = 0;
         for (i = 0; i < produtosSelecionados.length; i++) {
             for (produto of pedido_produtos) {
                 if (produtosSelecionados[i][0].id == produto.produto_id) {
-                    const atualizarProduto = await knex('produtos').where('id', produtosSelecionados[i][0].id).update(
-                        'quantidade_estoque', produtosSelecionados[i][0].quantidade_estoque - produto.quantidade_produto)
+                    const atualizarProduto = await knex('produtos')
+                        .where('id', produtosSelecionados[i][0].id)
+                        .update('quantidade_estoque', produtosSelecionados[i][0].quantidade_estoque - produto.quantidade_produto)
+                    valorTotalPedido = valorTotalPedido + (produtosSelecionados[i][0].valor * produto.quantidade_produto)
                     break
                 }
             }
         }
+
+        const registrarPedido = await knex('pedidos')
+            .insert({
+                cliente_id,
+                observacao,
+                valor_total: valorTotalPedido
+            }).returning('id')
+
+        for (pedido of pedido_produtos) {
+            const valor_produto = await knex('produtos').select('valor').where('id', pedido.produto_id)
+
+            const registrarPedido_Produto = await knex('pedido_produto').insert({
+                pedido_id: registrarPedido[0].id,
+                produto_id: pedido.produto_id,
+                quantidade_produto: pedido.quantidade_produto,
+                valor_produto: valor_produto[0].valor
+            }).returning('*')
+        }
+
     } catch (error) {
         console.log(error)
         return res.status(500).json({ mensagem: 'Erro interno do servidor' })
@@ -38,14 +62,14 @@ const cadastrarPedido = async (req, res) => {
     Você receberá um e-mail de confirmação do pedido.
     ` })
 }
-const listarpedidos = async (req, res) => {
+const listarPedidos = async (req, res) => {
     const { cliente_id } = req.body
     let resultado = []
     try {
 
         if (cliente_id) {
 
-            const VereficarExistencia = await Knex("clientes").where({ id: cliente_id }).first()
+            const VereficarExistencia = await knex("clientes").where({ id: cliente_id }).first()
 
             if (!VereficarExistencia) {
                 return res.status(404).json({ mensagem: "o Cliente não foi encontrado." })
@@ -100,5 +124,5 @@ const listarpedidos = async (req, res) => {
 
 module.exports = {
     cadastrarPedido,
-    listarpedidos
+    listarPedidos
 }
