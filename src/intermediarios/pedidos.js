@@ -35,18 +35,15 @@ const validarCamposPedido = async (req, res, next) => {
     }
 }
 
-
 const verificar_cliente = async (id) => {
     const Verific = await knex("clientes").where({ id }).first()
     return Verific
 }
 
-
 const bucaPedido = async (cliente_id) => {
     const busca = await knex("pedidos").where("cliente_id", cliente_id).count()
     return busca[0].count
 }
-
 
 const apenasPedidos = async (cliente_id) => {
     if (!cliente_id) {
@@ -54,6 +51,9 @@ const apenasPedidos = async (cliente_id) => {
 
         return listando
     }
+    const listar = await knex("pedidos").where("cliente_id", cliente_id)
+    return listar
+
 }
 
 const PedidoId = async (pedido) => {
