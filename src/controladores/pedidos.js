@@ -64,7 +64,7 @@ const cadastrarPedido = async (req, res) => {
     ` })
 }
 const listarPedidos = async (req, res) => {
-    const { cliente_id } = req.body
+    const { cliente_id } = req.query
 
     try {
         const resultado = []
@@ -87,7 +87,6 @@ const listarPedidos = async (req, res) => {
         }
 
         const pedidos = await apenasPedidos(cliente_id)
-
 
         for (const pedido of pedidos) {
             const {
