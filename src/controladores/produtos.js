@@ -114,7 +114,7 @@ const excluirProduto = async (req, res) => {
     }
 
     const pedidoComProduto = await knex("pedido_produto").where('produto_id', id);
-    console.log(pedidoComProduto)
+
     if (pedidoComProduto.length > 0) {
       return res.status(400).json("O produto não pode ser deletado pois á pedidos com ele")
     }
