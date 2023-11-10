@@ -113,11 +113,19 @@ const excluirProduto = async (req, res) => {
       return res.status.json("Não existe produto com o ID informado!");
     }
 
-    const pedidoComProduto = await knex("pedido_produto").where('produto_id', id);
+    const pedidoComProduto = await knex("pedido_produto").where('produto_id', id).select('produto_id');
 
     if (pedidoComProduto.length > 0) {
       return res.status(400).json("O produto não pode ser deletado pois á pedidos com ele")
     }
+
+    await s3
+      .deleteObject({
+        Bucket: process.env.BLACKBLAZE_BUCKET,
+        Key: originalname,
+      })
+      .promise();
+
     const produtoDeletado = await knex("produtos").del().where({ id });
 
     if (!produtoDeletado) {
