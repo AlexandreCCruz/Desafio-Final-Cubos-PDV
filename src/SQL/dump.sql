@@ -53,7 +53,7 @@ CREATE TABLE pedido_produto (
   pedido_id INTEGER REFERENCES pedidos(id) NOT NULL,
 	produto_id INTEGER REFERENCES produtos(id) NOT NULL,
   quantidade_produto INTEGER NOT NULL,
-  valor_produto INTEGER NOT NULL,
+  valor_produto INTEGER NOT NULL
 );
 
 ALTER TABLE produtos ADD COLUMN  produto_imagem text;

@@ -1,5 +1,5 @@
 const knex = require('../conexao');
-const { verificar_cliente, bucaPedido, PedidoId, apenasPedidos } = require('../intermediarios/pedidos');
+const { verificar_cliente, buscaPedido, PedidoId, apenasPedidos } = require('../intermediarios/pedidos');
 const transporter = require('../utils/mail')
 require('dotenv').config();
 
@@ -74,10 +74,10 @@ const listarPedidos = async (req, res) => {
             const VereficarExistencia = await verificar_cliente(cliente_id)
 
             if (!VereficarExistencia) {
-                return res.status(404).json({ mensagem: "o Cliente não foi encontrado." })
+                return res.status(404).json({ mensagem: "o cliente não foi encontrado." })
             }
 
-            const buscarPedido = await bucaPedido(cliente_id)
+            const buscarPedido = await buscaPedido(cliente_id)
 
 
             if (buscarPedido == 0) {

@@ -36,11 +36,11 @@ const validarCamposPedido = async (req, res, next) => {
 }
 
 const verificar_cliente = async (id) => {
-    const Verific = await knex("clientes").where({ id }).first()
-    return Verific
+    const Verifica = await knex("clientes").where({ id }).first()
+    return Verifica
 }
 
-const bucaPedido = async (cliente_id) => {
+const buscaPedido = async (cliente_id) => {
     const busca = await knex("pedidos").where("cliente_id", cliente_id).count()
     return busca[0].count
 }
@@ -66,7 +66,7 @@ const PedidoId = async (pedido) => {
 module.exports = {
     validarCamposPedido,
     verificar_cliente,
-    bucaPedido,
+    buscaPedido,
     apenasPedidos,
     PedidoId
 }
